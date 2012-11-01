@@ -1,0 +1,158 @@
+#main {text-align: center;}
+
+.intro, .app {
+  width: 1024px;
+  height: 800px;
+  padding: 0;
+  margin: 0;
+  border: solid 1px black;
+  display: inline-block;
+}
+
+.bandCanvas {
+  width: 1024px;
+  height: 643px; 
+  position: relative;
+  top: -189px;
+}
+
+.header {
+  background-image: url('/assets/images/header.jpg');
+  width: 1024px;
+  height: 80px;
+}
+
+.offer {
+  background-image: url('/assets/images/tickets.png');
+  width: 317px;
+  height: 167px;
+  left: 707px;
+  position: relative;
+  right: 0;
+  top:-80px;
+  z-index: 100;
+}
+
+.offer:hover {
+  background-image: url('/assets/images/tickets_hover.png');
+  width: 317px;
+  height: 167px;
+  left: 707px;
+  position: relative;
+  right: 0;
+  top:-80px;
+  z-index: 100;
+}
+
+.background {
+  background-image: url('/assets/images/intro_background.jpg');  
+  width: 1024px;
+  height: 682px;
+  position: relative;
+  top:-167px;
+}
+
+.getstarted{
+background-image: url('/assets/images/get_started.gif');  
+  width: 317px;
+  height: 57px;
+  position: relative;
+  display: inline-block;
+  top:380px;
+  left:200px;
+
+}
+
+
+
+  .friendFilter {
+    font-family: 'Metal Mania', cursive, Arial, Sans-Serif;
+  }
+
+  .friendList {
+    position: relative;
+    height: 480px;
+    margin: 0;
+    padding: 0;
+    width: 270px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    list-style: none;
+
+    -webkit-perspective: 400px;
+       -moz-perspective: 400px;
+        -ms-perspective: 400px;
+         -o-perspective: 400px;
+            perspective: 400px;
+  }
+  
+  .friendChooser li {
+    text-align: left;
+    position: relative;
+    padding: 16px;
+    font-size: 18px;
+    z-index: 2;
+    border-bottom: solid 1px black;
+
+    -webkit-transform: translateZ(0px);
+        -moz-transform: translateZ(0px);
+        -ms-transform: translateZ(0px);
+          -o-transform: translateZ(0px);
+            transform: translateZ(0px);
+  }
+  
+  .friendChooser li span {
+    padding-left: 10px;
+  }
+
+  .friendChooser li:hover {
+    -webkit-transform: scale(1.1,1.1); /* Safari and Chrome */
+       -moz-transform: scale(1.1,1.1); /* Firefox */
+        -ms-transform: scale(1.1,1.1); /* IE 9 */
+         -o-transform: scale(1.1,1.1); /* Opera */
+            transform: scale(1.1,1.1);
+  }
+  .friendChooser li.selected {
+    -webkit-transform: scale(.1,.1); /* Safari and Chrome */
+       -moz-transform: scale(.1,.1); /* Firefox */
+        -ms-transform: scale(.1,.1); /* IE 9 */
+         -o-transform: scale(.1,.1); /* Opera */
+            transform: scale(.1,.1);
+  }
+
+  .fbFriendSelector {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    background-color: white;
+    left: 600px;
+    width: 500px;
+    top: 100px;
+
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+
+       -moz-box-shadow: 5px 5px 5px black;
+    -webkit-box-shadow: 5px 5px 5px black;
+            box-shadow: 5px 5px 5px black;
+  }
+  
+
+  .addPhotoButton{
+
+    font-size: 24pt;
+    width: 100px; 
+    height: 30px;
+  }
+  .shareButton{
+
+    font-size: 24pt;
+        width: 100px; 
+    height: 30px;
+  }
+   .advancedShareButton{
+
+    font-size: 24pt;
+        width: 100px; 
+    height: 30px;
+  }

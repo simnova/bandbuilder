@@ -1,0 +1,6 @@
+{
+  "jam": {
+    "packageDir": "assets/js/libs",
+    "baseUrl": "app"
+  }
+}
