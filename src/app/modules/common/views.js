@@ -39,6 +39,7 @@ define([
 
       afterRender: function(){
         var view = this;
+
         var checkAuthResponseStatus = function(response) {
           if (response.status === 'connected') {
               // the user is logged in and has authenticated your
@@ -69,7 +70,7 @@ define([
 
       initialize: function(){ 
       /* *** */ 
-        var facebookApi = new FacebookApi();
+      //  var facebookApi = new FacebookApi();
       },
 
       // Provide data to the template

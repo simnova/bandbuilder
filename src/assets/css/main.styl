@@ -1,19 +1,183 @@
 #main {text-align: center;}
 
 .intro, .app {
-  width: 1024px;
+  width: 760px;
   height: 800px;
   padding: 0;
   margin: 0;
-  border: solid 1px black;
+ /* border: solid 1px black; will remove*/
   display: inline-block;
 }
+
+footer {
+  font-size: 8pt;
+}
+
+.intro .background {
+  background-image: url('/assets/images/step-one-background.jpg');  
+  background-repeat: no-repeat;
+  width: 760px;
+  height: 761px;
+  position: relative;
+}
+.builderDiv{
+  background-image: url('/assets/images/step-two-base.jpg');  
+  background-repeat: no-repeat;
+  width: 760px;
+  height: 761px;
+  text-align: left;
+}
+.thanksDiv{
+  background-image: url('/assets/images/step-three-background.jpg');  
+  background-repeat: no-repeat;
+  width: 760px;
+  height: 747px;
+  text-align: left;
+}
+.shareApp{
+  background-image: url('/assets/images/share-app.jpg');  
+  background-repeat: no-repeat;
+  position: relative;
+  width: 212px  ;
+  height: 31px;
+  left: 524px;
+  top: 20px;
+
+}
+.code{
+  position: relative;
+  font-size: 14pt;
+  left: 315px;
+  top: 424px;
+
+}
+.bookNow{
+  background-image: url('/assets/images/book-now.jpg');  
+  background-repeat: no-repeat;
+  position: relative;
+  width: 282px;
+  height: 61px;
+  top: 451px;
+  left: 235px;
+}
+
+
+.bandMember{
+  background-repeat: no-repeat;
+  width: 85px;
+  height: 85px;
+  position: relative;
+  display: inline-block;
+}
+
+.bandMember.keyboards {
+  background-image: url('/assets/images/keyboards.jpg');  
+  top: 174px;
+  left: 108px;
+}
+.bandMember.vocals {
+  background-image: url('/assets/images/vocals.jpg');  
+  left: 175px;
+  top: 173px;
+}
+.bandMember.drums {
+  background-image: url('/assets/images/drums.jpg');  
+  left: 243px;
+  top: 173px;
+}
+.bandMember.guitar {
+  background-image: url('/assets/images/guitar.jpg');  
+  left: 308px;
+  top: 173px;
+}
+
+.completeBand {
+  background-image: url('/assets/images/complete-band.jpg');  
+  width: 282px;
+  height: 61px;
+  position: relative;
+  top: 517px;
+  left: 238px;
+}
+
+.completeBand.disabled {
+  background-image: url('/assets/images/complete-band-disabled.jpg');  
+}
+
+.sound {
+  background-image: url("/assets/images/sound-on.png");
+  width: 111px;
+  height: 30px;
+  display: inline-block;
+  top: 487px;
+  left: 597px;
+  position: relative;
+}
+
+.sound.muted {
+  background-image: url("/assets/images/sound-off.png");
+}
+
+.friendChooser {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+
+
+
+.friendChooser .role {
+  font-size: 10pt;
+  margin-bottom: 30px;
+}
+
+.friendChooser > div { 
+  display: inline-block;
+  vertical-align: top;
+
+
+}
+
+
+.fbFriendSelectorContainer {
+  width: 270px;
+  padding: 20px;
+  text-align: left;
+
+         -moz-border-radius: 15px;
+            border-radius: 15px;
+
+       -moz-box-shadow: 5px 5px 5px black;
+    -webkit-box-shadow: 5px 5px 5px black;
+            box-shadow: 5px 5px 5px black;
+}
+
+.closeButton{
+  background-image: url("/assets/images/close-button.png");
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 81px;
+  height: 30px;
+}
+
+
+.getstarted{
+background-image: url('/assets/images/step-one-cta.png');  
+  width: 282px;
+  height: 88px;
+  position: relative;
+  display: inline-block;
+  top: 438px;
+  left: 10px;
+}
+
 
 .bandCanvas {
   width: 1024px;
   height: 643px; 
   position: relative;
-  top: -189px;
+  top: -167px;
 }
 
 .header {
@@ -44,39 +208,31 @@
   z-index: 100;
 }
 
-.background {
-  background-image: url('/assets/images/intro_background.jpg');  
-  width: 1024px;
-  height: 682px;
-  position: relative;
-  top:-167px;
+
+
+
+
+/* fix for ios form zooming: http://stackoverflow.com/questions/2989263/disable-auto-zoom-in-input-text-tag-safari-on-iphone */
+input[type='text'], input[type='number'], textarea {
+  font-size:16px;
 }
 
-.getstarted{
-background-image: url('/assets/images/get_started.gif');  
-  width: 317px;
-  height: 57px;
-  position: relative;
-  display: inline-block;
-  top:380px;
-  left:200px;
-
-}
-
-
-
+/*
   .friendFilter {
     font-family: 'Metal Mania', cursive, Arial, Sans-Serif;
   }
+  */
 
   .friendList {
     position: relative;
-    height: 480px;
+    height: 300px;
     margin: 0;
+    margin-top:20px;
     padding: 0;
-    width: 270px;
+    width: 530px;
     overflow-x: hidden;
     overflow-y: scroll;
+    /*
     list-style: none;
 
     -webkit-perspective: 400px;
@@ -84,50 +240,61 @@ background-image: url('/assets/images/get_started.gif');
         -ms-perspective: 400px;
          -o-perspective: 400px;
             perspective: 400px;
+            */
   }
   
-  .friendChooser li {
-    text-align: left;
+    .friendList > div {
+      text-align: left;
     position: relative;
-    padding: 16px;
-    font-size: 18px;
-    z-index: 2;
-    border-bottom: solid 1px black;
+    display: inline-block;
+    padding: 10px;
+    width: 200px;
+    vertical-align: middle;
+    height: 65px;
 
-    -webkit-transform: translateZ(0px);
-        -moz-transform: translateZ(0px);
-        -ms-transform: translateZ(0px);
-          -o-transform: translateZ(0px);
-            transform: translateZ(0px);
   }
   
-  .friendChooser li span {
-    padding-left: 10px;
-  }
+  .friendList img {
+      display: inline-block;
 
+  }
+  
+  .friendList > div > div {
+    max-width: 130px;
+    display: inline-block;
+    font-size: 12pt;
+    padding-left: 10px;
+    vertical-align: middle;
+  }
+ /*
   .friendChooser li:hover {
-    -webkit-transform: scale(1.1,1.1); /* Safari and Chrome */
-       -moz-transform: scale(1.1,1.1); /* Firefox */
-        -ms-transform: scale(1.1,1.1); /* IE 9 */
-         -o-transform: scale(1.1,1.1); /* Opera */
+    -webkit-transform: scale(1.1,1.1); 
+       -moz-transform: scale(1.1,1.1); 
+        -ms-transform: scale(1.1,1.1); 
+         -o-transform: scale(1.1,1.1); 
             transform: scale(1.1,1.1);
   }
+ 
   .friendChooser li.selected {
-    -webkit-transform: scale(.1,.1); /* Safari and Chrome */
-       -moz-transform: scale(.1,.1); /* Firefox */
-        -ms-transform: scale(.1,.1); /* IE 9 */
-         -o-transform: scale(.1,.1); /* Opera */
+    -webkit-transform: scale(.1,.1); 
+       -moz-transform: scale(.1,.1); 
+        -ms-transform: scale(.1,.1); 
+         -o-transform: scale(.1,.1); 
             transform: scale(.1,.1);
   }
 
+.fbFriendSelectorContainer {
+  background-color: rgba(0,0,0,.5);
+  text-align: center;
+  display: relative;
+} 
   .fbFriendSelector {
-    display: none;
-    position: absolute;
+
     z-index: 100;
     background-color: white;
-    left: 600px;
     width: 500px;
     top: 100px;
+
 
        -moz-border-radius: 5px;
             border-radius: 5px;
@@ -136,13 +303,15 @@ background-image: url('/assets/images/get_started.gif');
     -webkit-box-shadow: 5px 5px 5px black;
             box-shadow: 5px 5px 5px black;
   }
+   */
   
 
   .addPhotoButton{
-
     font-size: 24pt;
-    width: 100px; 
-    height: 30px;
+    position: relative;
+    top: -200px;
+    width: 300px;
+    height: 100px;
   }
   .shareButton{
 
@@ -156,3 +325,39 @@ background-image: url('/assets/images/get_started.gif');
         width: 100px; 
     height: 30px;
   }
+
+.lazy {
+  display: none;
+}
+
+
+
+
+
+.jqmWindow {
+    display: none;
+    
+    position: fixed;
+    top: 14%;
+    left: 50%;
+    
+    margin-left: -275px;
+    width: 565px;
+    
+    background-color: #EEE;
+    color: #333;
+    padding: 5px;
+}
+
+.jqmOverlay { background-color: #000; }
+
+/* Fixed posistioning emulation for IE6
+     Star selector used to hide definition from browsers other than IE6
+     For valid CSS, use a conditional include instead */
+* html .jqmWindow {
+     position: absolute;
+     top: expression((document.documentElement.scrollTop || document.body.scrollTop) + Math.round(17 * (document.documentElement.offsetHeight || document.body.clientHeight) / 100) + 'px');
+}
+
+
+
