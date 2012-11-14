@@ -6,7 +6,10 @@ define([
 
   // Plugins.
   "plugins/backbone.layoutmanager",
-  "jqueryUi"
+  "jqueryUi",
+  "lazyload",
+  "jqmodal",
+  "cancelzoom"
 ],
 
 function($, _, Backbone) {
@@ -18,6 +21,31 @@ function($, _, Backbone) {
     root: "/",
     dispatcher : _.clone(Backbone.Events)
   };
+  var ismobile = true;
+  var scaleScreen = function () {
+    var scaleAmount = window.innerWidth / 1024;
+    alert(scaleAmount);
+    /*
+    $('#main').css({
+      'transform-origin': '0 0',
+      '-ms-transform-origin': '0 0',
+      '-webkit-transform-origin': '0 0',
+      '-o-transform-origin': '0 0',
+      '-moz-transform-origin': '0 0',
+      'transform': 'scale(' + scaleAmount + ' , ' + scaleAmount + ')',
+      '-ms-transform': 'scale(' + scaleAmount + ' , ' + scaleAmount + ')',
+      '-webkit-transform': 'scale(' + scaleAmount + ' , ' + scaleAmount + ')',
+      '-o-transform': 'scale(' + scaleAmount + ' , ' + scaleAmount + ')',
+      '-moz-transform': 'scale(' + scaleAmount + ' , ' + scaleAmount + ')',
+      'left': '0',
+      'top': '0',
+      'text-align': 'inherit',
+    });
+*/
+
+  }
+
+
 
   // Localize or create a new JavaScript Template object.
   var JST = window.JST = window.JST || {};

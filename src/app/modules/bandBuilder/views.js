@@ -21,33 +21,23 @@ define([
       drummer: {},
       frontman: {},
       bassist: {},
+      muted: false,
 
       tagName: "div",
 
       template: "bandBuilder/default",
 
-      clickPlayer: function (playerName) {
-        var view = this;
-        switch (playerName) {
-          case "keyboardist":
-            view.keyboardist.sound.play();
-            break;
-          case "drummer":
-            view.drummer.sound.play();
-            break;
-          case "frontman":
-            view.frontman.sound.play();
-            break;
-          case "bassist":
-            view.bassist.sound.play();
-            break;
-        }
-        app.dispatcher.trigger("clickPlayer", playerName);
-      },
+      events: {
+        "click .shareButton" : "share",
+        "click .addPhotoButton" : "addPhoto",
+        "click .advancedShareButton" : "advancedShare",
+        "click .inviteFriends" : "inviteFriends",
+        "click .mute" : "mute"
+      }, // events
+
+
       initialize: function () {
         var view = this;
-
-
 
        // var createjs = new CreateJs();
         // may need to convert from buzz.js to jplayer.org for legacy support
@@ -77,27 +67,37 @@ define([
               var x = player.bitmap.x,
                   y = player.bitmap.y,
                   img = new Image();
-              img.crossOrigin = '';
-              img.src = response.picture.data.url;
+
+              img.crossOrigin = 'anonymous'; // or ''
+              img.src = '/imageproxy/?url=' + response.picture.data.url;
               $(img).load(function () {
+
+
                 player.bitmap.image = img;
+                // facebook doesn't always return pictures at the coorect dimensions,
+                player.bitmap.scaleX = 94 / img.width; 
+                player.bitmap.scaleY = 94 / img.height;
+
                 player.fbid = friendDetails.fbid;
                 player.fbName = friendDetails.fbName;
-                view.stage.update();
+                if(view.stage !== undefined){
+                    view.stage.update();
+                }
+                
               });
             });
           }
         }, this);
       },
 
-
       afterRender: function () {
         var view = this;
 
         var loadCanvas = function () {
-          console.log("loaded");
+
           var canvas = $(".bandCanvas").get(0);
-          var stage = view.stage = new window.createjs.Stage(canvas);
+          view.stage = new window.createjs.Stage(canvas);
+          var stage = view.stage;
           var bitmap = new window.createjs.Bitmap(loader.getResult("band_background").result);
 
           bitmap.scaleX = 1;
@@ -114,7 +114,7 @@ define([
             };
 
             return bitmap;
-          };
+          }; // addPlayer
 
           var background = stage.addChild(bitmap);
           view.keyboardist.bitmap = addPlayer(205,80,"keyboardist");
@@ -124,31 +124,57 @@ define([
 
           stage.update();
 
-
-        };
+        }; // loadCanvas
 
         var manifest = [];
 
         manifest.push({ src: "/assets/images/band_background.gif", id: "band_background"});
         manifest.push({ src: "/assets/images/head_button.gif", id: "head_button"});
 
-        var loader = new window.createjs.PreloadJS(false);
+        var loader = new window.createjs.PreloadJS();
         loader.setMaxConnections(30);
         loader.onComplete = function () {
-          console.log(loader.progress);
           if (loader.progress === 1) {
             loadCanvas();
           }
         };
         loader.loadManifest(manifest);
         
-      },
+      }, // afterRender
 
-      events: {
-        "click .shareButton" : "share",
-        "click .addPhotoButton" : "addPhoto",
-        "click .advancedShareButton" : "advancedShare"
-      },
+      mute: function (event) {
+        var view = this;
+        if($('.mute').hasClass('muted')){
+          $('.mute').removeClass('muted').addClass('soundOn');
+          view.muted = false;
+        } else {
+          $('.mute').removeClass('soundOn').addClass('muted');
+          view.muted = true;
+        }
+      }, //mute
+
+      clickPlayer: function (playerName) {
+        var view = this;
+
+        if(view.muted == false){
+          switch (playerName) {
+            case "keyboardist":
+              view.keyboardist.sound.play();
+              break;
+            case "drummer":
+              view.drummer.sound.play();
+              break;
+            case "frontman":
+              view.frontman.sound.play();
+              break;
+            case "bassist":
+              view.bassist.sound.play();
+              break;
+          }
+        }
+
+        app.dispatcher.trigger("clickPlayer", playerName);
+      }, //clickPlayer
 
       advancedShare : function (event) {
         var view = this;
@@ -164,7 +190,7 @@ define([
             method: 'feed',
             link: url,
             picture: "http://beej.us/pizza/images/pizzalogo2.png",
-            name: 'My rock star name is whoha, @@100001852255810 do you think it matches my music tastes?',
+            name:'I made my band with the @[' + appId + ':Rockstar Creator] cool heh? (starring: @[' +view.keyboardist.fbid +':'+ view.keyboardist.fbName +'] as the keyboardist, @[' + view.drummer.fbid +':'+ view.drummer.fbName +'] as the drummer, @[' + view.frontman.fbid +':'+ view.frontman.fbName+'] as the frontman, @[' + view.bassist.fbid + ':'+ view.bassist.fbName +'] as the bassist)',
             caption: 'Get your own rockstar name with Hertz',
             description: 'Rock it out with a hertz rental and get $30 off a rental. The Hertz rockstar name generator is a fun way to explore your inner rock star!',
             place: fanPageId,
@@ -186,8 +212,25 @@ define([
         }
 
         window.FB.ui(obj, callback);
-      },
+      }, // advancedShare
+
+      inviteFriends: function(event){
+
+        var callback = function (response) {
+            //document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+            if (response !== undefined && response !== null) {
+                window.alert("thanks for sharing!");
+            }
+
+        }
+        window.FB.ui({method: 'apprequests',
+          message: 'I just created a band and saved money with Hertz you can too!'
+        }, callback);
+
+      }, //inviteFriends
+
       share : function (event) {
+        var view = this;
         var appId = JsDefaults.facebook.appId;
         var postMSG='My I made my band with the @[' + appId + ':Rockstar Creator] cool heh?';
         var url='https://graph.facebook.com/me/feed?access_token='+window.FB.getAccessToken()+"&message="+postMSG;
@@ -202,7 +245,7 @@ define([
           return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
         }
 
-        formData.append("source",dataURItoBlob(stage.toDataURL()));
+        formData.append("source",dataURItoBlob(view.stage.toDataURL()));
 
         $.ajax({
           url: url,
@@ -216,8 +259,10 @@ define([
               alert("POST SUCCESSFUL");
           }
         });
-      },
+      }, // share
+
       addPhoto : function (event) {
+        var view = this;
         var appId = JsDefaults.facebook.appId;
         var postMSG='My I made my band with the @[' + appId + ':Rockstar Creator] cool heh? (starring: @[' +view.keyboardist.fbid +':'+ view.keyboardist.fbName +'] as the keyboardist, @[' + view.drummer.fbid +':'+ view.drummer.fbName +'] as the drummer, @[' + view.frontman.fbid +':'+ view.frontman.fbName+'] as the frontman, @[' + view.bassist.fbid + ':'+ view.bassist.fbName +'] as the bassist)';
         var url='https://graph.facebook.com/me/photos?access_token='+window.FB.getAccessToken()+"&message="+postMSG+"&privacy={'value':'ALL_FRIENDS'}";
@@ -233,7 +278,7 @@ define([
           return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
         }
 
-        formData.append("source",dataURItoBlob(stage.toDataURL()));
+        formData.append("source",dataURItoBlob(view.stage.toDataURL()));
 
         $.ajax({
           url: url,
@@ -244,10 +289,14 @@ define([
           type: 'POST',
 
           success: function (data) {
-              alert("POST SUCCESSFUL");
+              $(".builderDiv").hide();
+              $(".thanksDiv").show();
+          },error: function (jqXHR, textStatus, errorThrown){
+            alert("error:" + textStatus + errorThrown);
           }
         });
-      },
+      }, //addPhoto
+
       share3 : function (event) {
         var appId = JsDefaults.facebook.appId;
         var fanpageUrl = JsDefaults.facebook.fanpageUrl;
@@ -276,7 +325,7 @@ define([
         }
 
         window.FB.api('me/photos','post',options, callback);
-      },
+      }, // share3
       
       share2 : function (event) {
         var appId = JsDefaults.facebook.appId;
@@ -307,7 +356,7 @@ define([
         }
 
         window.FB.ui(obj, callback);
-      },
+      }, // share2
 
       // Provide data to the template
       serialize: function () {

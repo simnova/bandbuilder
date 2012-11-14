@@ -21,8 +21,12 @@ require.config({
     facebookApi: "../assets/js/libs/facebookApi",
     createjs: "../assets/js/libs/easeljs-0.5.0.min",
     buzz: "../assets/js/libs/buzz",
-    preloadjs: "../assets/js/libs/preloadjs-0.2.0.min"
-    
+    preloadjs: "../assets/js/libs/preloadjs-0.2.0.min",
+    lazyload: "../assets/js/libs/lazyload",
+    jqmodal: "../assets/js/libs/jqmodal",
+    viewporter: "../assets/js/libs/viewporter",
+    viewporterNative: "../assets/js/libs/viewporter.native",
+    cancelzoom: "../assets/js/libs/cancelzoom",
   },
 
   shim: {
@@ -34,6 +38,16 @@ require.config({
     jqueryUi: {
       deps: ["jquery"],
     },
+    lazyload: {
+      deps: ["jquery"],
+    },
+    jqmodal: {
+      deps: ["jquery"],
+    },
+    cancelzoom: {
+      deps: ["jquery"],
+    },
+
     /*
     buzz: {
       exports: "buzz"

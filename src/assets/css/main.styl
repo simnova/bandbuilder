@@ -1,19 +1,37 @@
 #main {text-align: center;}
 
 .intro, .app {
-  width: 1024px;
+  width: 760px;
   height: 800px;
   padding: 0;
   margin: 0;
-  border: solid 1px black;
+  border: solid 1px black; /*will remove*/
   display: inline-block;
 }
+
+.intro .background {
+  background-image: url('/assets/images/step-one-background.jpg');  
+  width: 760px;
+  height: 766px;
+  position: relative;
+}
+
+.getstarted{
+background-image: url('/assets/images/step-one-cta.png');  
+  width: 285px;
+  height: 88px;
+  position: relative;
+  display: inline-block;
+  top: 438px;
+  left: 10px;
+}
+
 
 .bandCanvas {
   width: 1024px;
   height: 643px; 
   position: relative;
-  top: -189px;
+  top: -167px;
 }
 
 .header {
@@ -44,34 +62,24 @@
   z-index: 100;
 }
 
-.background {
-  background-image: url('/assets/images/intro_background.jpg');  
-  width: 1024px;
-  height: 682px;
-  position: relative;
-  top:-167px;
+
+
+
+
+/* fix for ios form zooming: http://stackoverflow.com/questions/2989263/disable-auto-zoom-in-input-text-tag-safari-on-iphone */
+input[type='text'], input[type='number'], textarea {
+  font-size:16px;
 }
 
-.getstarted{
-background-image: url('/assets/images/get_started.gif');  
-  width: 317px;
-  height: 57px;
-  position: relative;
-  display: inline-block;
-  top:380px;
-  left:200px;
-
-}
-
-
-
+/*
   .friendFilter {
     font-family: 'Metal Mania', cursive, Arial, Sans-Serif;
   }
+  */
 
   .friendList {
     position: relative;
-    height: 480px;
+    height: 300px;
     margin: 0;
     padding: 0;
     width: 270px;
@@ -104,30 +112,35 @@ background-image: url('/assets/images/get_started.gif');
   .friendChooser li span {
     padding-left: 10px;
   }
-
+ /*
   .friendChooser li:hover {
-    -webkit-transform: scale(1.1,1.1); /* Safari and Chrome */
-       -moz-transform: scale(1.1,1.1); /* Firefox */
-        -ms-transform: scale(1.1,1.1); /* IE 9 */
-         -o-transform: scale(1.1,1.1); /* Opera */
+    -webkit-transform: scale(1.1,1.1); 
+       -moz-transform: scale(1.1,1.1); 
+        -ms-transform: scale(1.1,1.1); 
+         -o-transform: scale(1.1,1.1); 
             transform: scale(1.1,1.1);
   }
+ 
   .friendChooser li.selected {
-    -webkit-transform: scale(.1,.1); /* Safari and Chrome */
-       -moz-transform: scale(.1,.1); /* Firefox */
-        -ms-transform: scale(.1,.1); /* IE 9 */
-         -o-transform: scale(.1,.1); /* Opera */
+    -webkit-transform: scale(.1,.1); 
+       -moz-transform: scale(.1,.1); 
+        -ms-transform: scale(.1,.1); 
+         -o-transform: scale(.1,.1); 
             transform: scale(.1,.1);
   }
 
+.fbFriendSelectorContainer {
+  background-color: rgba(0,0,0,.5);
+  text-align: center;
+  display: relative;
+} 
   .fbFriendSelector {
-    display: none;
-    position: absolute;
+
     z-index: 100;
     background-color: white;
-    left: 600px;
     width: 500px;
     top: 100px;
+
 
        -moz-border-radius: 5px;
             border-radius: 5px;
@@ -136,13 +149,15 @@ background-image: url('/assets/images/get_started.gif');
     -webkit-box-shadow: 5px 5px 5px black;
             box-shadow: 5px 5px 5px black;
   }
+   */
   
 
   .addPhotoButton{
-
     font-size: 24pt;
-    width: 100px; 
-    height: 30px;
+    position: relative;
+    top: -200px;
+    width: 300px;
+    height: 100px;
   }
   .shareButton{
 
@@ -156,3 +171,75 @@ background-image: url('/assets/images/get_started.gif');
         width: 100px; 
     height: 30px;
   }
+
+.lazy {
+  display: none;
+}
+
+.fbFriendSelectorContainer {
+  width: 270px;
+
+         -moz-border-radius: 15px;
+            border-radius: 15px;
+
+       -moz-box-shadow: 5px 5px 5px black;
+    -webkit-box-shadow: 5px 5px 5px black;
+            box-shadow: 5px 5px 5px black;
+}
+
+.friendChooser > div { 
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 30px;
+}
+
+.jqmWindow {
+    display: none;
+    
+    position: fixed;
+    top: 17%;
+    left: 50%;
+    
+    margin-left: -300px;
+    width: 600px;
+    
+    background-color: #EEE;
+    color: #333;
+    border: 1px solid black;
+    padding: 12px;
+}
+
+.jqmOverlay { background-color: #000; }
+
+/* Fixed posistioning emulation for IE6
+     Star selector used to hide definition from browsers other than IE6
+     For valid CSS, use a conditional include instead */
+* html .jqmWindow {
+     position: absolute;
+     top: expression((document.documentElement.scrollTop || document.body.scrollTop) + Math.round(17 * (document.documentElement.offsetHeight || document.body.clientHeight) / 100) + 'px');
+}
+
+.closeButton{
+  position: absolute;
+right: 20px;
+}
+
+.muted {
+  background-image: url("/assets/images/1352293712_sound_mute.png");
+  width: 48px;
+  height: 48px;
+  display: inline-block;
+  top: -807px;
+  left: -616px;
+  position: relative;
+}
+
+.soundOn {
+  background-image: url("/assets/images/1352293826_sound_high.png");
+  width: 48px;
+  height: 48px;
+  display: inline-block;
+  top: -807px;
+  left: -616px;
+  position: relative;
+}
