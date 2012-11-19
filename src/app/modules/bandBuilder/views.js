@@ -21,6 +21,7 @@ define([
       drummer: {},
       frontman: {},
       bassist: {},
+      wholeband: {},
       muted: false,
 
       tagName: "div",
@@ -29,6 +30,7 @@ define([
 
       events: {
         "click .bandMember" : "modifyMember",
+        "click .bookNow" : "bookNow",
         "click .completeBand:not(.disabled)" : "addPhoto",
         "click .shareButton" : "share",
         "click .addPhotoButton" : "addPhoto",
@@ -43,10 +45,19 @@ define([
 
        // var createjs = new CreateJs();
         // may need to convert from buzz.js to jplayer.org for legacy support
+        /*
         view.keyboardist.sound = new buzz.sound("/assets/sound/206507_SOUNDDOGS__sy", { formats: ["ogg", "mp3", "wav"], preload: true });
         view.drummer.sound = new buzz.sound("/assets/sound/206156_SOUNDDOGS__fu", { formats: ["ogg", "mp3", "wav"], preload: true});
         view.frontman.sound = new buzz.sound("/assets/sound/185912_SOUNDDOGS__gu", { formats: ["ogg", "mp3", "wav"], preload: true});
         view.bassist.sound = new buzz.sound("/assets/sound/186516_SOUNDDOGS__ba", { formats: ["ogg", "mp3", "wav"], preload: true});
+        */
+
+        view.keyboardist.sound = new buzz.sound("/assets/sound/687787_SOUNDDOGS__mu", { formats: ["ogg", "mp3", "wav"], preload: true });
+        view.drummer.sound = new buzz.sound("/assets/sound/179330_SOUNDDOGS__th", { formats: ["ogg", "mp3", "wav"], preload: true});
+        view.frontman.sound = new buzz.sound("/assets/sound/female_vocals_01", { formats: ["ogg", "mp3", "wav"], preload: true});
+        view.bassist.sound = new buzz.sound("/assets/sound/185829_SOUNDDOGS__gu", { formats: ["ogg", "mp3", "wav"], preload: true});
+        view.wholeband.sound = new buzz.sound("/assets/sound/153659_Head-Rush-Prod-Cue-4-shortened", { formats: ["ogg", "mp3", "wav"], preload: true});
+        
 
         app.dispatcher.on("updatePlayer", function (friendDetails) {
           var player;
@@ -69,10 +80,13 @@ define([
               className = "guitar";
               break;
           }
+
+          var imageSize = 85;
+
           var updateCanvasElemment = function(response){
             var x = player.bitmap.x,
-                  y = player.bitmap.y,
-                  img = new Image();
+                y = player.bitmap.y,
+                img = new Image();
 
               img.crossOrigin = 'anonymous'; // or ''
               img.src = '/imageproxy/?url=' + response.picture.data.url;
@@ -93,10 +107,10 @@ define([
               });
           }
 
-          var imageSize = 85;
           if(player.bitmap !== undefined){
             window.FB.api(friendDetails.fbid +'/?fields=picture.width('+ imageSize + ').height('+ imageSize + '),name',function(response){
-              $('.builderDiv .' + className).css('background-image','url('+ response.picture.data.url +')');
+              updateCanvasElemment(response);
+              $('.builderDiv .' + className).css('background-image','url(/imageproxy/?url='+ response.picture.data.url +')');
               player.fbid = friendDetails.fbid;
               player.fbName = friendDetails.fbName;
               
@@ -140,10 +154,10 @@ define([
           }; // addPlayer
 
           var background = stage.addChild(bitmap);
-          view.keyboardist.bitmap = addPlayer(205,80,"keyboardist");
-          view.drummer.bitmap = addPlayer(390,160,"drummer");
-          view.frontman.bitmap = addPlayer(550,100,"frontman");
-          view.bassist.bitmap = addPlayer(760,60,"bassist");
+          view.keyboardist.bitmap = addPlayer(75,132,"keyboardist");
+          view.drummer.bitmap = addPlayer(321,132,"drummer");
+          view.frontman.bitmap = addPlayer(198,132,"frontman");
+          view.bassist.bitmap = addPlayer(444,132,"bassist");
 
           stage.update();
 
@@ -151,8 +165,8 @@ define([
 
         var manifest = [];
 
-        manifest.push({ src: "/assets/images/band_background.gif", id: "band_background"});
-        manifest.push({ src: "/assets/images/head_button.gif", id: "head_button"});
+        manifest.push({ src: "/assets/images/post-base.jpg", id: "band_background"});
+        manifest.push({ src: "/assets/images/silhouette_85x85.gif", id: "head_button"});
 
         var loader = new window.createjs.PreloadJS();
         loader.setMaxConnections(30);
@@ -164,6 +178,12 @@ define([
         loader.loadManifest(manifest);
         
       }, // afterRender
+
+      bookNow: function(event){
+        var view = this;
+        var targetUrl = 'http://www.hertz.com/rentacar/specialoffers/index.jsp?targetPage=LN_25offwkndwkly.xml';
+        window.open(targetUrl,'_blank');
+      }, //bookNow
 
       changeSound: function (event) {
         var view = this;
@@ -268,9 +288,27 @@ define([
             }
 
         }
-        window.FB.ui({method: 'apprequests',
-          message: 'I just created a band and saved money with Hertz you can too!'
-        }, callback);
+
+        window.FB.api(
+          'me?fields=picture.width(55).height(55),name,first_name,last_name', 
+          function (item) {
+            var me = {
+                name: item.name,
+                id: item.id,
+                profileImage: item.picture.data.url,
+                firstName : item.first_name,
+                lastName : item.last_name
+            };
+            window.FB.ui({
+              method: 'apprequests',
+              message: me.firstName + ' thinks you rock. Build Your Band and save money with Hertz.',
+              data:'request-in-app'
+            }, callback);
+          }
+        );
+
+
+
 
       }, //inviteFriends
 
@@ -305,16 +343,33 @@ define([
           }
         });
       }, // share
-      addPhoto: function(event){
+      addPhoto3: function(event){
 
         $(".builderDiv").hide();
         $(".thanksDiv").show();
       },
-      addPhoto2 : function (event) {
+      addPhoto : function (event) {
         var view = this;
         var appId = JsDefaults.facebook.appId;
-        var postMSG='My I made my band with the @[' + appId + ':Rockstar Creator] cool heh? (starring: @[' +view.keyboardist.fbid +':'+ view.keyboardist.fbName +'] as the keyboardist, @[' + view.drummer.fbid +':'+ view.drummer.fbName +'] as the drummer, @[' + view.frontman.fbid +':'+ view.frontman.fbName+'] as the frontman, @[' + view.bassist.fbid + ':'+ view.bassist.fbName +'] as the bassist)';
-        var url='https://graph.facebook.com/me/photos?access_token='+window.FB.getAccessToken()+"&message="+postMSG+"&privacy={'value':'ALL_FRIENDS'}";
+
+        var postMSG='I made my band with the @[' + appId + ':Rockstar Creator] app, now all we need is a name. What do you think? %0d%0a %0d%0a Starring:';
+        if(view.keyboardist.fbid !== undefined){
+          postMSG = postMSG + ' @[' +view.keyboardist.fbid +':'+ view.keyboardist.fbName +'] on the keyboards,'
+        }
+        if(view.drummer.fbid !== undefined){
+          postMSG = postMSG + ' @[' + view.drummer.fbid +':'+ view.drummer.fbName +'] on the drums,'
+        }
+        if(view.frontman.fbid !== undefined){
+          postMSG = postMSG + ' @[' + view.frontman.fbid +':'+ view.frontman.fbName+'] as the singer,'
+        }
+        if(view.bassist.fbid !== undefined){
+          postMSG = postMSG + ' @[' + view.bassist.fbid + ':'+ view.bassist.fbName +'] on the guitar,'
+        }
+
+        postMSG = postMSG.slice(0,postMSG.length-1); // remove last comma
+        postMSG = postMSG + ' %0d%0a %0d%0a Build Your Band at: http://apps.facebook.com/hertzrockstarstage/?app_data=wallpost'
+
+        var url='https://graph.facebook.com/me/photos?access_token='+window.FB.getAccessToken()+"&message="+postMSG;
         //var url='https://graph.facebook.com/me/photos?access_token='+window.FB.getAccessToken();
         // var imgURL="http://farm4.staticflickr.com/3332/3451193407_b7f047f4b4_o.jpg";//change with your external photo url
         var formData = new FormData();
@@ -328,21 +383,26 @@ define([
         }
 
         formData.append("source",dataURItoBlob(view.stage.toDataURL()));
-
+        view.wholeband.sound.play();
         $.ajax({
           url: url,
           data: formData,
           cache: false,
           contentType: false,
           processData: false,
+          dataType: 'json',
           type: 'POST',
 
           success: function (data) {
+      $(".builderDiv").hide();
               $(".builderDiv").hide();
               $(".thanksDiv").show();
           },error: function (jqXHR, textStatus, errorThrown){
-            alert("error:" + textStatus + errorThrown);
+            //alert("error:" + textStatus + errorThrown);
+              $(".builderDiv").hide();
+              $(".thanksDiv").show();
           }
+
         });
       }, //addPhoto
 

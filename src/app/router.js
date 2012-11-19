@@ -14,10 +14,11 @@ function (app, FbFriendSelector, BandBuilder, Common) {
 
     routes: {
       "": "index",
+      "?*query": "index",
       "app" : "app"
     }, // routes
 
-    index: function () {
+    index: function (query) {
       app.useLayout({
         el: "#main",
         template: "layouts/intro"
