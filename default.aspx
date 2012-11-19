@@ -13,6 +13,7 @@
 </head>
 
 <body>
+  <div id="fb-root"></div>
   <div id="viewporter">
     <!-- Main container. -->
     <div role="main" id="main"></div>

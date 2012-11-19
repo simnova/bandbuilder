@@ -367,7 +367,7 @@ define([
         }
 
         postMSG = postMSG.slice(0,postMSG.length-1); // remove last comma
-        postMSG = postMSG + ' %0d%0a %0d%0a Build Your Band at: http://apps.facebook.com/hertzrockstarstage/?app_data=wallpost'
+        postMSG = postMSG + ' %0d%0a %0d%0a Build Your Band at: ' + JsDefaults.facebook.canvasUrl + '?app_data=wallpost'
 
         var url='https://graph.facebook.com/me/photos?access_token='+window.FB.getAccessToken()+"&message="+postMSG;
         //var url='https://graph.facebook.com/me/photos?access_token='+window.FB.getAccessToken();
