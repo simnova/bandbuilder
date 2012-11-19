@@ -6,7 +6,7 @@
 <!--  <meta name="viewport" content="width=device-width,initial-scale=1"> -->
   <meta name="viewport" content="width=320" />
 
-  <title>Backbone Boilerplate</title>
+  <title>Hertz - Build Your Band</title>
 
   <!-- Application styles. -->
   <link rel="stylesheet" href="/assets/css/index.css">
