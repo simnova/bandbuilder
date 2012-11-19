@@ -15,7 +15,7 @@ function (app, FbFriendSelector, BandBuilder, Common) {
     routes: {
       "": "index",
       "?*query": "index",
-      "app" : "app"
+      "builder" : "app"
     }, // routes
 
     index: function (query) {

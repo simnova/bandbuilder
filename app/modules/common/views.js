@@ -27,13 +27,13 @@ define([
           FB.login(function(response) {
             if (response.authResponse) {
               view.authorized = true;
-              app.router.navigate('app',true);
+              app.router.navigate('builder',true);
             } else {
               // user didn't authorize just sit here and do nothing
             }
           }, {scope: 'publish_stream'});
         } else {
-          app.router.navigate('app',true);
+          app.router.navigate('builder',true);
         }
       },
 
