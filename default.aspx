@@ -22,7 +22,7 @@
   <script data-main="/app/config" src="/assets/js/libs/require.js"></script>
 
   <script type="text/javascript"> 
-    var $buoop = {vs:{i:8,f:12,o:11,s:5,n:9}} 
+    var $buoop = {vs:{i:8,f:12,o:11,s:5.2,n:9}} 
     $buoop.ol = window.onload; 
     window.onload=function(){ 
      try {if ($buoop.ol) $buoop.ol();}catch (e) {} 
