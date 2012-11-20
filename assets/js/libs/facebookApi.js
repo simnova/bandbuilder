@@ -19,6 +19,7 @@ define(['jquery','jsdefaults'], function ($,JsDefaults) {
 
     window.fbAsyncInit = function () {
       FB.init(JsDefaults.facebook);
+      FB.Canvas.setAutoGrow();
       defer.resolve();
     }
     fbLoaded = defer.promise();
