@@ -240,22 +240,44 @@ define([
         //http://beej.us/pizza/images/pizzalogo2.png
 
         var appId = JsDefaults.facebook.appId,
+            canvasUrl = JsDefaults.facebook.canvasUrl,
             fanpageUrl = JsDefaults.facebook.fanpageUrl,
             fanPageId = JsDefaults.facebook.fanpageId,
             url = fanpageUrl + '?sk=app_' + appId;
+
+
+            var postMSG=' %0d%0a %0d%0a Starring:';
+        if(view.keyboardist.fbid !== undefined){
+          postMSG = postMSG + ' @[' +view.keyboardist.fbid +':'+ view.keyboardist.fbName +'] on the keyboards,';
+          totalBandMembers++;
+        }
+        if(view.drummer.fbid !== undefined){
+          postMSG = postMSG + ' @[' + view.drummer.fbid +':'+ view.drummer.fbName +'] on the drums,';
+          totalBandMembers++;
+        }
+        if(view.frontman.fbid !== undefined){
+          postMSG = postMSG + ' @[' + view.frontman.fbid +':'+ view.frontman.fbName+'] as the singer,';
+          totalBandMembers++;
+        }
+        if(view.bassist.fbid !== undefined){
+          postMSG = postMSG + ' @[' + view.bassist.fbid + ':'+ view.bassist.fbName +'] on the guitar,';
+          totalBandMembers++;
+        }
+
+        postMSG = postMSG.slice(0,postMSG.length-1); // remove last comma
+        postMSG = postMSG + ' %0d%0a %0d%0a Build Your Band at: ' + JsDefaults.facebook.canvasUrl + '?app_data=wallpost'
 
         // calling the API ...
         var obj = {
             method: 'feed',
             link: url,
-            picture: "http://beej.us/pizza/images/pizzalogo2.png",
-            name:'I made my band with the @[' + appId + ':Rockstar Creator] cool heh? (starring: @[' +view.keyboardist.fbid +':'+ view.keyboardist.fbName +'] as the keyboardist, @[' + view.drummer.fbid +':'+ view.drummer.fbName +'] as the drummer, @[' + view.frontman.fbid +':'+ view.frontman.fbName+'] as the frontman, @[' + view.bassist.fbid + ':'+ view.bassist.fbName +'] as the bassist)',
-            caption: 'Get your own rockstar name with Hertz',
-            description: 'Rock it out with a hertz rental and get $30 off a rental. The Hertz rockstar name generator is a fun way to explore your inner rock star!',
+            picture:  'http://'+ window.location.host + '/assets/images/app_detail.png',
+            name:'I made my band with the @[' + appId + ':Rockstar Creator] app, now all we need is a name. What do you think?',
+            caption: 'Hertz-Build Your Band',
+            description: postMSG,
             place: fanPageId,
-            tags: view.keyboardist.fbid +"," + view.drummer.fbid +"," + view.frontman.fbid +"," + view.bassist.fbid,
             properties: {
-                "Try it yourself": { 'text': 'Get your name!', 'href': url },
+                "Try it yourself": { 'text': 'Build Your Band', 'href': canvasUrl }, 
                 "Or just rent": { 'text': 'Rent with Hertz', 'href': 'http://www.hertz.com' }
             },
             actions: [{ name: 'Rent a Car', link: 'http://www.hertz.com'}],
@@ -433,6 +455,7 @@ define([
               window._gaq.push(['_trackPageview','step_3-OfferPage']);
           },
           error: function (jqXHR, textStatus, errorThrown){
+              view.advancedShare(); // IOS
             //alert("error:" + textStatus + errorThrown);
               $(".builderDiv").hide();
               $(".thanksDiv").show();
@@ -472,7 +495,7 @@ define([
         window.FB.api('me/photos','post',options, callback);
       }, // share3
       
-      share2 : function (event) {
+      share5 : function (caption) {
         var appId = JsDefaults.facebook.appId;
         var fanpageUrl = JsDefaults.facebook.fanpageUrl;
         var url = fanpageUrl + '?sk=app_' + appId;
