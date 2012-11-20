@@ -32,7 +32,7 @@ define([
         "click .bookNow" : "bookNow",
         "click .completeBand:not(.disabled)" : "addPhoto",
         "click .shareButton" : "share",
-        "click .addPhotoButton" : "addPhoto",
+        "click .addPhotoButton" : "advancedShare",
         "click .advancedShareButton" : "advancedShare",
         "click .shareApp" : "inviteFriends",
         "click .sound" : "changeSound"
@@ -243,7 +243,7 @@ define([
             canvasUrl = JsDefaults.facebook.canvasUrl,
             fanpageUrl = JsDefaults.facebook.fanpageUrl,
             fanPageId = JsDefaults.facebook.fanpageId,
-            url = fanpageUrl + '?sk=app_' + appId;
+            url = JsDefaults.facebook.canvasUrl + '?app_data=wallpost';
 
 
         var postMSG='Starring:';
@@ -261,22 +261,21 @@ define([
         }
 
         postMSG = postMSG.slice(0,postMSG.length-1); // remove last comma
-        postMSG = postMSG + ' Build Your Band at: ' + JsDefaults.facebook.canvasUrl + '?app_data=wallpost'
 
         // calling the API ...
         var obj = {
             method: 'feed',
             link: url,
-            picture:  'http://'+ window.location.host + '/assets/images/app_detail.png',
+            picture: 'http://buildyourband.azurewebsites.net/assets/images/app_detail_96x96.png',
             name:'I made my band with the Rockstar Creator app, now all we need is a name. What do you think?',
             caption: 'Hertz: Build Your Band',
             description: postMSG,
             place: fanPageId,
             properties: {
-                "Try it yourself": { 'text': 'Build Your Band', 'href': canvasUrl + '?app_data=wallpost' }, 
-                " Or just rent": { 'text': 'Rent with Hertz', 'href': 'http://www.hertz.com' }
+                "Try it yourself": { 'text': 'Build Your Band', 'href': url }
+                //"Or just rent": { 'text': 'Rent with Hertz', 'href': 'http://www.hertz.com' }
             },
-            actions: [{ name: 'Rent a Car', link: 'http://www.hertz.com'}],
+            actions: [{ name: 'Build Your Band', link: url}],
             ref: 'appshare'
         };
 
