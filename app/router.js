@@ -50,7 +50,7 @@ function (app, FbFriendSelector, BandBuilder, Common) {
 
             case "adshare":
               // Track traffic from Facebook - originating from ad unit
-              _gaq.push(
+              window._gaq.push(
                 ['_setCampSourceKey', 'facebook'],
                 ['_setCampMediumKey', 'social-share-link'],
                 ['_setCampNameKey', 'live-nation-rockstar-adunit']
@@ -59,7 +59,7 @@ function (app, FbFriendSelector, BandBuilder, Common) {
 
             case "twitter":
               // Track traffic from Twitter - originating from ad unit
-              _gaq.push(
+              window._gaq.push(
                 ['_setCampSourceKey', 'twitter'],
                 ['_setCampMediumKey', 'social-share-link'],
                 ['_setCampNameKey', 'live-nation-rockstar-adunit']
@@ -68,7 +68,7 @@ function (app, FbFriendSelector, BandBuilder, Common) {
 
             case "wallpost":
               // Track traffic from Facebook - originating from band wall post
-              _gaq.push(
+              window._gaq.push(
                 ['_setCampSourceKey', 'facebook'],
                 ['_setCampMediumKey', 'in-app-feed-post'],
                 ['_setCampNameKey', 'live-nation-rockstar-viral']
@@ -80,7 +80,7 @@ function (app, FbFriendSelector, BandBuilder, Common) {
         } else if (urlParams["fb_source"] == "notification" && urlParams["notif_t"] == "app_request"){
 
           // Track traffic from Facebook - originating from app requsts 
-          _gaq.push(
+          window._gaq.push(
             ['_setCampSourceKey', 'facebook'],
             ['_setCampMediumKey', 'in-app-referral'],
             ['_setCampNameKey', 'live-nation-rockstar-viral']
@@ -90,7 +90,7 @@ function (app, FbFriendSelector, BandBuilder, Common) {
 
           // https://developers.facebook.com/docs/fb_source/
           // Track traffic from Facebook Like, Send and anything else from Facebook as Campaign traffic
-          _gaq.push(
+          window._gaq.push(
               ['_setCampSourceKey', 'facebook'],
               ['_setCampMediumKey', urlParams["fb_source"]],
               ['_setCampNameKey', 'live-nation-rockstar-viral'],
