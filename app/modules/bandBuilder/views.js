@@ -243,25 +243,22 @@ define([
             canvasUrl = JsDefaults.facebook.canvasUrl,
             fanpageUrl = JsDefaults.facebook.fanpageUrl,
             fanPageId = JsDefaults.facebook.fanpageId,
-            url = fanpageUrl + '?sk=app_' + appId;
+            url = fanpageUrl + '?sk=app_' + appId,
+            totalBandMembers = 0;
 
 
             var postMSG=' %0d%0a %0d%0a Starring:';
         if(view.keyboardist.fbid !== undefined){
           postMSG = postMSG + ' @[' +view.keyboardist.fbid +':'+ view.keyboardist.fbName +'] on the keyboards,';
-          totalBandMembers++;
         }
         if(view.drummer.fbid !== undefined){
           postMSG = postMSG + ' @[' + view.drummer.fbid +':'+ view.drummer.fbName +'] on the drums,';
-          totalBandMembers++;
         }
         if(view.frontman.fbid !== undefined){
           postMSG = postMSG + ' @[' + view.frontman.fbid +':'+ view.frontman.fbName+'] as the singer,';
-          totalBandMembers++;
         }
         if(view.bassist.fbid !== undefined){
           postMSG = postMSG + ' @[' + view.bassist.fbid + ':'+ view.bassist.fbName +'] on the guitar,';
-          totalBandMembers++;
         }
 
         postMSG = postMSG.slice(0,postMSG.length-1); // remove last comma
