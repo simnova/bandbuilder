@@ -386,7 +386,11 @@ define([
         }
 
         formData.append("source",dataURItoBlob(view.stage.toDataURL()));
-        view.wholeband.sound.play();
+        
+        if(view.muted == false){
+          view.wholeband.sound.play();
+        }
+        
 
         $.ajax({
           url: url,

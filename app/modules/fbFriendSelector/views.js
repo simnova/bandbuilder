@@ -45,7 +45,7 @@ define([
              effect : "fadeIn"
           });
           view.requestLoad();
-          window._gaq.push(['_trackEvent', 'friendSelector', 'showDialog', view.playerName]);
+          window._gaq.push(['_trackEvent', 'FriendSelector', 'ShowDialog', view.playerName]);
         }); //dispatcher
 
       }, //initialize
@@ -162,7 +162,7 @@ define([
       close: function(event){
         var view = this;
         view.$el.parent().jqmHide();
-        window._gaq.push(['_trackEvent', 'friendSelector', 'closeDialog', view.playerName]);
+        window._gaq.push(['_trackEvent', 'FriendSelector', 'CloseDialog', view.playerName]);
       }, //close
       selectFriend: function (event) {
         var view = this;
@@ -175,7 +175,7 @@ define([
             fbName: $(friend).data('value'),
         };
         app.dispatcher.trigger("updatePlayer", friendDetails);
-        window._gaq.push(['_trackEvent', 'friendSelector', 'selectFriend', view.playerName]);
+        window._gaq.push(['_trackEvent', 'FriendSelector', 'SelectFriend', view.playerName]);
       }, // selectFriend
 
       requestLoad: function(){

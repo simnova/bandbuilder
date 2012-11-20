@@ -1,4 +1,7 @@
-#main {text-align: center;}
+#main {
+  text-align: center;
+  margin-top: 15px;
+}
 
 .intro, .app {
   width: 760px;
@@ -44,6 +47,9 @@ footer {
   top: 20px;
   cursor:pointer;cursor:hand;
 }
+.shareApp:hover{
+  background-image: url('/assets/images/share-app-hover.jpg');  
+}
 .code{
   position: relative;
   font-size: 14pt;
@@ -57,9 +63,12 @@ footer {
   position: relative;
   width: 282px;
   height: 61px;
-  top: 451px;
+  top: 409px;
   left: 235px;
   cursor:pointer;cursor:hand;
+}
+.bookNow:hover{
+  background-image: url('/assets/images/book-now-hover.jpg');  
 }
 
 
@@ -105,6 +114,9 @@ footer {
 
 .completeBand.disabled {
   background-image: url('/assets/images/complete-band-disabled.jpg');  
+}
+.completeBand:not(.disabled):hover {
+  background-image: url('/assets/images/complete-band-hover.jpg');  
 }
 
 .sound {
@@ -168,16 +180,19 @@ footer {
 
 
 .getstarted{
-background-image: url('/assets/images/step-one-cta.png');  
-  width: 282px;
-  height: 88px;
+  background-image: url('/assets/images/step-one-cta.jpg');  
+  width: 266px;
+  height: 52px;
   position: relative;
   display: inline-block;
-  top: 438px;
+  top: 453px;
   left: 10px;
   cursor:pointer;cursor:hand;
 }
 
+.getstarted:hover{
+  background-image: url('/assets/images/step-one-cta-hover.jpg');  
+}
 
 .bandCanvas {
   position: relative;

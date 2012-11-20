@@ -42,6 +42,8 @@ function (app, FbFriendSelector, BandBuilder, Common) {
 
         parseUrlParams();
 
+        // Setting Campaign Tracking : https://developers.google.com/analytics/devguides/collection/gajs/methods/gaJSApiCampaignTracking
+
         if ("app_data" in urlParams){
           
           switch(urlParams["app_data"]){
