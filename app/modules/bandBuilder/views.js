@@ -243,39 +243,38 @@ define([
             canvasUrl = JsDefaults.facebook.canvasUrl,
             fanpageUrl = JsDefaults.facebook.fanpageUrl,
             fanPageId = JsDefaults.facebook.fanpageId,
-            url = fanpageUrl + '?sk=app_' + appId,
-            totalBandMembers = 0;
+            url = fanpageUrl + '?sk=app_' + appId;
 
 
-            var postMSG=' %0d%0a %0d%0a Starring:';
+        var postMSG='Starring:';
         if(view.keyboardist.fbid !== undefined){
-          postMSG = postMSG + ' @[' +view.keyboardist.fbid +':'+ view.keyboardist.fbName +'] on the keyboards,';
+          postMSG = postMSG + ' '+ view.keyboardist.fbName +' on the keyboards,';
         }
         if(view.drummer.fbid !== undefined){
-          postMSG = postMSG + ' @[' + view.drummer.fbid +':'+ view.drummer.fbName +'] on the drums,';
+          postMSG = postMSG + ' '+ view.drummer.fbName +' on the drums,';
         }
         if(view.frontman.fbid !== undefined){
-          postMSG = postMSG + ' @[' + view.frontman.fbid +':'+ view.frontman.fbName+'] as the singer,';
+          postMSG = postMSG + ' '+ view.frontman.fbName+' as the singer,';
         }
         if(view.bassist.fbid !== undefined){
-          postMSG = postMSG + ' @[' + view.bassist.fbid + ':'+ view.bassist.fbName +'] on the guitar,';
+          postMSG = postMSG + ' '+ view.bassist.fbName +' on the guitar,';
         }
 
         postMSG = postMSG.slice(0,postMSG.length-1); // remove last comma
-        postMSG = postMSG + ' %0d%0a %0d%0a Build Your Band at: ' + JsDefaults.facebook.canvasUrl + '?app_data=wallpost'
+        postMSG = postMSG + ' Build Your Band at: ' + JsDefaults.facebook.canvasUrl + '?app_data=wallpost'
 
         // calling the API ...
         var obj = {
             method: 'feed',
             link: url,
             picture:  'http://'+ window.location.host + '/assets/images/app_detail.png',
-            name:'I made my band with the @[' + appId + ':Rockstar Creator] app, now all we need is a name. What do you think?',
-            caption: 'Hertz-Build Your Band',
+            name:'I made my band with the Rockstar Creator app, now all we need is a name. What do you think?',
+            caption: 'Hertz: Build Your Band',
             description: postMSG,
             place: fanPageId,
             properties: {
-                "Try it yourself": { 'text': 'Build Your Band', 'href': canvasUrl }, 
-                "Or just rent": { 'text': 'Rent with Hertz', 'href': 'http://www.hertz.com' }
+                "Try it yourself": { 'text': 'Build Your Band', 'href': canvasUrl + '?app_data=wallpost' }, 
+                " Or just rent": { 'text': 'Rent with Hertz', 'href': 'http://www.hertz.com' }
             },
             actions: [{ name: 'Rent a Car', link: 'http://www.hertz.com'}],
             ref: 'appshare'
@@ -284,7 +283,8 @@ define([
         var callback = function (response) {
             //document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
             if (response !== undefined && response !== null) {
-                window.alert("thanks for sharing!");
+              $(".builderDiv").hide();
+              $(".thanksDiv").show();
             }
 
         }
@@ -454,8 +454,7 @@ define([
           error: function (jqXHR, textStatus, errorThrown){
               view.advancedShare(); // IOS
             //alert("error:" + textStatus + errorThrown);
-              $(".builderDiv").hide();
-              $(".thanksDiv").show();
+
               window._gaq.push(['_trackPageview','step_3-OfferPage']);
           }
         });//ajax
