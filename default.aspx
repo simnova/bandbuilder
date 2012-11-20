@@ -23,7 +23,7 @@
 
   <script type="text/javascript"> 
     var $buoop = {
-      vs:{i:8,f:12,o:11,s:5.2,n:9},
+      vs:{i:9,f:12,o:11,s:5.2,n:9},
       newwindow: true 
     };
     $buoop.ol = window.onload; 
