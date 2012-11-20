@@ -75,6 +75,24 @@ function (app, FbFriendSelector, BandBuilder, Common) {
               );
               break;
 
+            case "fanpost1":
+              // Track traffic from Facebook - originating from band wall post
+              window._gaq.push(
+                ['_setCampSourceKey', 'facebook'],
+                ['_setCampMediumKey', 'fan-page-post'],
+                ['_setCampNameKey', 'live-nation-rockstar-viral']
+              );
+              break;
+
+            case "fanpost2":
+              // Track traffic from Facebook - originating from band wall post
+              window._gaq.push(
+                ['_setCampSourceKey', 'facebook'],
+                ['_setCampMediumKey', 'fan-page-post'],
+                ['_setCampNameKey', 'live-nation-rockstar-fanpage']
+              );
+              break;
+
           }; //switch
 
         } else if (urlParams["fb_source"] == "notification" && urlParams["notif_t"] == "app_request"){
