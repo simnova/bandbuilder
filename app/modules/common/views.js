@@ -5,6 +5,7 @@ define([
   "backbone",
   "jquery",
   "facebookApi",
+  "preloadjs"
 //Libs with no export
 
   ],
@@ -79,8 +80,20 @@ define([
       },
 
       initialize: function(){ 
-      /* *** */ 
-      //  var facebookApi = new FacebookApi();
+        /* preload hover images, could do sprites, but this is easier for right now */
+        var manifest = [];
+        manifest.push({ src: "/assets/images/step-one-cta-hover.jpg"});
+        manifest.push({ src: "/assets/images/share-app-hover.jpg"});
+        manifest.push({ src: "/assets/images/book-now-hover.jpg"});
+        manifest.push({ src: "/assets/images/complete-band-hover.jpg"});
+        manifest.push({ src: "/assets/images/tickets_hover.png"});
+
+        var loader = new window.createjs.PreloadJS();
+        loader.setMaxConnections(30);
+        loader.onComplete = function () {
+          /* do nothing */
+        };
+        loader.loadManifest(manifest);
       },
 
       // Provide data to the template
