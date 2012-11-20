@@ -368,13 +368,13 @@ define([
         var appId = JsDefaults.facebook.appId;
         var totalBandMembers = 0;
 
-        var postMSG='I made my band with the @[' + appId + ':Rockstar Creator] app, now all we need is a name. What do you think? %0d%0a %0d%0a Starring:';
+        var postMSG='I made a band, now all we need is a name. What do you think? %0d%0a %0d%0a Starring:';
         if(view.keyboardist.fbid !== undefined){
-          postMSG = postMSG + ' @[' +view.keyboardist.fbid +':'+ view.keyboardist.fbName +'] on the keyboards,';
+          postMSG = postMSG + ' @[' +view.keyboardist.fbid +':'+ view.keyboardist.fbName +'] on keyboards,';
           totalBandMembers++;
         }
         if(view.drummer.fbid !== undefined){
-          postMSG = postMSG + ' @[' + view.drummer.fbid +':'+ view.drummer.fbName +'] on the drums,';
+          postMSG = postMSG + ' @[' + view.drummer.fbid +':'+ view.drummer.fbName +'] on drums,';
           totalBandMembers++;
         }
         if(view.frontman.fbid !== undefined){
@@ -382,7 +382,7 @@ define([
           totalBandMembers++;
         }
         if(view.bassist.fbid !== undefined){
-          postMSG = postMSG + ' @[' + view.bassist.fbid + ':'+ view.bassist.fbName +'] on the guitar,';
+          postMSG = postMSG + ' @[' + view.bassist.fbid + ':'+ view.bassist.fbName +'] on guitar,';
           totalBandMembers++;
         }
 
