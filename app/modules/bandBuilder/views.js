@@ -392,6 +392,16 @@ define([
         var url='https://graph.facebook.com/me/photos?access_token='+window.FB.getAccessToken()+"&message="+postMSG;
         //var url='https://graph.facebook.com/me/photos?access_token='+window.FB.getAccessToken();
         // var imgURL="http://farm4.staticflickr.com/3332/3451193407_b7f047f4b4_o.jpg";//change with your external photo url
+
+
+        if(window.FormData === undefined){
+          view.advancedShare(); 
+          window._gaq.push(['_trackEvent', 'CreateBand','PostBand','Total Band Members',totalBandMembers]);
+          window._gaq.push(['_trackPageview','step_3-OfferPage']);
+          return;
+        }
+        
+
         var formData = new FormData();
         /* OLD method, may be broken?
 
@@ -434,7 +444,7 @@ define([
         if(view.muted == false){
           view.wholeband.sound.play();
         }
-        
+
 
         $.ajax({
           url: url,
@@ -453,7 +463,7 @@ define([
           error: function (jqXHR, textStatus, errorThrown){
               view.advancedShare(); // IOS
             //alert("error:" + textStatus + errorThrown);
-
+               window._gaq.push(['_trackEvent', 'CreateBand','PostBand','Total Band Members',totalBandMembers]);
               window._gaq.push(['_trackPageview','step_3-OfferPage']);
           }
         });//ajax
