@@ -109,7 +109,6 @@ function (app, FbFriendSelector, BandBuilder, Common) {
         ".fbFriendSelectorContainer": new FbFriendSelector.Views.Default({}),
         ".bandBuilder": new BandBuilder.Views.Default({})
       }).render().done(function () {
-        window._gaq.push(['_trackPageview']);
         /* *** */
       });
     } // app
