@@ -42,15 +42,7 @@ define([
 
       initialize: function () {
         var view = this;
-
-       // var createjs = new CreateJs();
         // may need to convert from buzz.js to jplayer.org for legacy support
-        /*
-        view.keyboardist.sound = new buzz.sound("/assets/sound/206507_SOUNDDOGS__sy", { formats: ["ogg", "mp3", "wav"], preload: true });
-        view.drummer.sound = new buzz.sound("/assets/sound/206156_SOUNDDOGS__fu", { formats: ["ogg", "mp3", "wav"], preload: true});
-        view.frontman.sound = new buzz.sound("/assets/sound/185912_SOUNDDOGS__gu", { formats: ["ogg", "mp3", "wav"], preload: true});
-        view.bassist.sound = new buzz.sound("/assets/sound/186516_SOUNDDOGS__ba", { formats: ["ogg", "mp3", "wav"], preload: true});
-        */
 
         view.keyboardist.sound = new buzz.sound("/assets/sound/687787_SOUNDDOGS__mu", { formats: ["ogg", "mp3", "wav"], preload: true });
         view.drummer.sound = new buzz.sound("/assets/sound/179330_SOUNDDOGS__th", { formats: ["ogg", "mp3", "wav"], preload: true});
@@ -58,7 +50,6 @@ define([
         view.bassist.sound = new buzz.sound("/assets/sound/185829_SOUNDDOGS__gu", { formats: ["ogg", "mp3", "wav"], preload: true});
         view.wholeband.sound = new buzz.sound("/assets/sound/153659_Head-Rush-Prod-Cue-4-shortened", { formats: ["ogg", "mp3", "wav"], preload: true});
         
-
         app.dispatcher.on("updatePlayer", function (friendDetails) {
           var player;
           var className;
@@ -91,7 +82,6 @@ define([
               img.crossOrigin = 'anonymous'; // or ''
               img.src = '/imageproxy/?url=' + response.picture.data.url;
               $(img).load(function () {
-
 
                 player.bitmap.image = img;
                 // facebook doesn't always return pictures at the coorect dimensions,
@@ -176,13 +166,16 @@ define([
           }
         };
         loader.loadManifest(manifest);
+
+        window._gaq.push(['_trackPageview','step_2-BandPage']);
         
       }, // afterRender
 
       bookNow: function(event){
         var view = this;
-        var targetUrl = 'http://www.hertz.com/rentacar/specialoffers/index.jsp?targetPage=LN_25offwkndwkly.xml';
+        var targetUrl = 'http://link.hertz.com/link.html?id=31948&LinkType=HZLK&target=specialoffers/index.jsp?targetPage=LN_25offwkndwkly.xml&Category=Q ';
         window.open(targetUrl,'_blank');
+        window._gaq.push(['_trackPageview','step_4-BookNow']);
       }, //bookNow
 
       changeSound: function (event) {
@@ -190,9 +183,11 @@ define([
         if($('.sound').hasClass('muted')){
           $('.sound').removeClass('muted');
           view.muted = false;
+          window._gaq.push(['_trackEvent', 'Sound', 'UnMute']);
         } else {
           $('.sound').addClass('muted');
           view.muted = true;
+          window._gaq.push(['_trackEvent', 'Sound', 'Mute']);
         }
       }, //mute
 
@@ -280,11 +275,14 @@ define([
       }, // advancedShare
 
       inviteFriends: function(event){
-
+        window._gaq.push(['_trackEvent', 'FacebookRequests', 'ShowDialog']);
         var callback = function (response) {
             //document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
             if (response !== undefined && response !== null) {
                 window.alert("thanks for sharing!");
+                window._gaq.push(['_trackEvent', 'FacebookRequests', 'Share','FriendCount',response.to.length]);
+            }else{
+              window._gaq.push(['_trackEvent', 'FacebookRequests', 'CloseDialog']);
             }
 
         }
@@ -351,19 +349,24 @@ define([
       addPhoto : function (event) {
         var view = this;
         var appId = JsDefaults.facebook.appId;
+        var totalBandMembers = 0;
 
         var postMSG='I made my band with the @[' + appId + ':Rockstar Creator] app, now all we need is a name. What do you think? %0d%0a %0d%0a Starring:';
         if(view.keyboardist.fbid !== undefined){
-          postMSG = postMSG + ' @[' +view.keyboardist.fbid +':'+ view.keyboardist.fbName +'] on the keyboards,'
+          postMSG = postMSG + ' @[' +view.keyboardist.fbid +':'+ view.keyboardist.fbName +'] on the keyboards,';
+          totalBandMembers++;
         }
         if(view.drummer.fbid !== undefined){
-          postMSG = postMSG + ' @[' + view.drummer.fbid +':'+ view.drummer.fbName +'] on the drums,'
+          postMSG = postMSG + ' @[' + view.drummer.fbid +':'+ view.drummer.fbName +'] on the drums,';
+          totalBandMembers++;
         }
         if(view.frontman.fbid !== undefined){
-          postMSG = postMSG + ' @[' + view.frontman.fbid +':'+ view.frontman.fbName+'] as the singer,'
+          postMSG = postMSG + ' @[' + view.frontman.fbid +':'+ view.frontman.fbName+'] as the singer,';
+          totalBandMembers++;
         }
         if(view.bassist.fbid !== undefined){
-          postMSG = postMSG + ' @[' + view.bassist.fbid + ':'+ view.bassist.fbName +'] on the guitar,'
+          postMSG = postMSG + ' @[' + view.bassist.fbid + ':'+ view.bassist.fbName +'] on the guitar,';
+          totalBandMembers++;
         }
 
         postMSG = postMSG.slice(0,postMSG.length-1); // remove last comma
@@ -384,6 +387,7 @@ define([
 
         formData.append("source",dataURItoBlob(view.stage.toDataURL()));
         view.wholeband.sound.play();
+
         $.ajax({
           url: url,
           data: formData,
@@ -392,18 +396,20 @@ define([
           processData: false,
           dataType: 'json',
           type: 'POST',
-
           success: function (data) {
-      $(".builderDiv").hide();
               $(".builderDiv").hide();
               $(".thanksDiv").show();
-          },error: function (jqXHR, textStatus, errorThrown){
+              window._gaq.push(['_trackEvent', 'CreateBand','PostBand','Total Band Members',totalBandMembers]);
+              window._gaq.push(['_trackPageview','step_3-OfferPage']);
+          },
+          error: function (jqXHR, textStatus, errorThrown){
             //alert("error:" + textStatus + errorThrown);
               $(".builderDiv").hide();
               $(".thanksDiv").show();
+              window._gaq.push(['_trackPageview','step_3-OfferPage']);
           }
+        });//ajax
 
-        });
       }, //addPhoto
 
       share3 : function (event) {

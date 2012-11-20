@@ -45,7 +45,9 @@ define([
              effect : "fadeIn"
           });
           view.requestLoad();
-        });
+          window._gaq.push(['_trackEvent', 'friendSelector', 'showDialog', view.playerName]);
+        }); //dispatcher
+
       }, //initialize
 
       // Provide data to the template
@@ -61,12 +63,10 @@ define([
         view.$el.parent().jqm({
           modal: true,
           onShow: function(h) {
-            /* callback executed when a trigger click. Show notice */
             h.w.css('opacity',0.92).fadeIn(); 
             view.requestLoad();
           },
           onHide: function(h) {
-            /* callback executed on window hide. Hide notice, overlay. */
             h.w.fadeOut("slow",function() { if(h.o) h.o.remove(); }); 
           }
         });
@@ -156,11 +156,13 @@ define([
           window.FB.getLoginStatus(function (response) {
             checkAuthResponseStatus(response);
           });
-        })
+        });
+
       }, //afterRender
       close: function(event){
         var view = this;
         view.$el.parent().jqmHide();
+        window._gaq.push(['_trackEvent', 'friendSelector', 'closeDialog', view.playerName]);
       }, //close
       selectFriend: function (event) {
         var view = this;
@@ -173,6 +175,7 @@ define([
             fbName: $(friend).data('value'),
         };
         app.dispatcher.trigger("updatePlayer", friendDetails);
+        window._gaq.push(['_trackEvent', 'friendSelector', 'selectFriend', view.playerName]);
       }, // selectFriend
 
       requestLoad: function(){

@@ -19,6 +19,8 @@ require.config({
     stroll: "../assets/js/libs/stroll",
     jsdefaults: "../assets/js/libs/jsdefaults",
     facebookApi: "../assets/js/libs/facebookApi",
+    googleAnalytics: "../assets/js/libs/googleAnalytics",
+    
     createjs: "../assets/js/libs/easeljs-0.5.0.min",
     buzz: "../assets/js/libs/buzz",
     preloadjs: "../assets/js/libs/preloadjs-0.2.0.min",

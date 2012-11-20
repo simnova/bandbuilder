@@ -9,7 +9,8 @@ define([
   "jqueryUi",
   "lazyload",
   "jqmodal",
-  "cancelzoom"
+  "cancelzoom",
+  "googleAnalytics"
 ],
 
 function($, _, Backbone) {
