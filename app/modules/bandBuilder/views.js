@@ -11,7 +11,6 @@ define([
   "buzz"
   ],
   function (app, Backbone, $, JsDefaults) {
-    "use strict";
     var Views = {};
 
     Views.Default = Backbone.View.extend({
@@ -386,7 +385,7 @@ define([
         }
 
         formData.append("source",dataURItoBlob(view.stage.toDataURL()));
-        
+
         if(view.muted == false){
           view.wholeband.sound.play();
         }
