@@ -437,6 +437,7 @@ define([
           return;
         }
         
+        
 
         var formData = new FormData();
         /* OLD method, may be broken?
