@@ -28,9 +28,21 @@ define([
           window._gaq.push(['_trackEvent', 'FacebookAuthRequest','Show Dialog']);
           FB.login(function(response) {
             if (response.authResponse) {
-              view.authorized = true;
-              app.router.navigate('builder',true);
-              window._gaq.push(['_trackEvent', 'FacebookAuthRequest','User Granted Authorization']);
+
+
+              FB.api('/me/permissions',function(response){
+                if(response.data[0]["publish_stream"] == 1){
+                  view.authorized = true;
+                  app.router.navigate('builder',true);
+                  window._gaq.push(['_trackEvent', 'FacebookAuthRequest','User Granted Authorization']);
+                }else{
+                  view.authorized = false;
+                  alert("You must authorize all permissions before continuing.");
+                  window._gaq.push(['_trackEvent', 'FacebookAuthCheck','User Granted Authorization - Rejected publish_stream']);
+                }
+              });
+
+
             } else {
               // user didn't authorize just sit here and do nothing
               window._gaq.push(['_trackEvent', 'FacebookAuthRequest','User Rejected Authorization']);
@@ -54,8 +66,16 @@ define([
               // and signed request each expire
               var uid = response.authResponse.userID;
               var accessToken = response.authResponse.accessToken;
-              view.authorized = true;
-              window._gaq.push(['_trackEvent', 'FacebookAuthCheck','Already Authorized']);
+              FB.api('/me/permissions',function(response){
+                if(response.data[0]["publish_stream"] == 1){
+                  view.authorized = true;
+                  window._gaq.push(['_trackEvent', 'FacebookAuthCheck','Already Authorized']);
+                }else{
+                  view.authorized = false;
+                  window._gaq.push(['_trackEvent', 'FacebookAuthCheck','Already Authorized - not publish_stream']);
+                }
+              });
+              
           } else if (response.status === 'not_authorized') {
               // the user is logged in to Facebook, 
               // but has not authenticated your app

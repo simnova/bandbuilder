@@ -5,12 +5,13 @@ define([
   "backbone",
   "jquery",
   "jsdefaults",
+  "facebookApi",
   // non exporting libaries
   "createjs",
   "preloadjs",
   "buzz"
   ],
-  function (app, Backbone, $, JsDefaults) {
+  function (app, Backbone, $, JsDefaults,FacebookApi) {
     var Views = {};
 
     Views.Default = Backbone.View.extend({
@@ -41,8 +42,39 @@ define([
 
       initialize: function () {
         var view = this;
-        // may need to convert from buzz.js to jplayer.org for legacy support
 
+        //ensure this code only executes after FB has been intialized properly
+        FacebookApi.Execute(function(){
+          FB.getLoginStatus(function(response) {
+            
+            if (response.status === 'connected') {
+                // the user is logged in and has authenticated your
+                // app, and response.authResponse supplies
+                // the user's ID, a valid access token, a signed
+                // request, and the time the access token 
+                // and signed request each expire
+                FB.api('/me/permissions',function(response){
+                  if(response.data[0]["publish_stream"] == 1){
+                    
+                  }else{
+                    app.router.navigate('/',true);
+                  }
+                });
+                
+            } else if (response.status === 'not_authorized') {
+                // the user is logged in to Facebook, 
+                // but has not authenticated your app
+                app.router.navigate('/',true);
+            } else {
+                // the user isn't logged in to Facebook.
+                app.router.navigate('/',true);
+            };
+
+          }, true);
+        });
+
+
+        // may need to convert from buzz.js to jplayer.org for legacy support
         view.keyboardist.sound = new buzz.sound("/assets/sound/687787_SOUNDDOGS__mu", { formats: ["ogg", "mp3", "wav"], preload: true });
         view.drummer.sound = new buzz.sound("/assets/sound/179330_SOUNDDOGS__th", { formats: ["ogg", "mp3", "wav"], preload: true});
         view.frontman.sound = new buzz.sound("/assets/sound/female_vocals_01", { formats: ["ogg", "mp3", "wav"], preload: true});
@@ -370,19 +402,23 @@ define([
 
         var postMSG='I made a band, now all we need is a name. What do you think? %0d%0a %0d%0a Starring:';
         if(view.keyboardist.fbid !== undefined){
-          postMSG = postMSG + ' @[' +view.keyboardist.fbid +':'+ view.keyboardist.fbName +'] on keyboards,';
+//          postMSG = postMSG + ' @[' + view.keyboardist.fbid +':'+ view.keyboardist.fbName +'] on keyboards,';
+          postMSG = postMSG + ' '+ view.keyboardist.fbName +' on keyboards,';
           totalBandMembers++;
         }
         if(view.drummer.fbid !== undefined){
-          postMSG = postMSG + ' @[' + view.drummer.fbid +':'+ view.drummer.fbName +'] on drums,';
+//          postMSG = postMSG + ' @[' + view.drummer.fbid +':'+ view.drummer.fbName +'] on drums,';
+          postMSG = postMSG + ' '+ view.drummer.fbName +' on drums,';
           totalBandMembers++;
         }
         if(view.frontman.fbid !== undefined){
-          postMSG = postMSG + ' @[' + view.frontman.fbid +':'+ view.frontman.fbName+'] as the singer,';
+//          postMSG = postMSG + ' @[' + view.frontman.fbid +':'+ view.frontman.fbName+'] as the singer,';
+          postMSG = postMSG + ' '+ view.frontman.fbName+' as the singer,';
           totalBandMembers++;
         }
         if(view.bassist.fbid !== undefined){
-          postMSG = postMSG + ' @[' + view.bassist.fbid + ':'+ view.bassist.fbName +'] on guitar,';
+//          postMSG = postMSG + ' @[' + view.bassist.fbid + ':'+ view.bassist.fbName +'] on guitar,';
+          postMSG = postMSG + ' '+ view.bassist.fbName +' on guitar,';
           totalBandMembers++;
         }
 
