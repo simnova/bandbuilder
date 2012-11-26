@@ -430,7 +430,7 @@ define([
         // var imgURL="http://farm4.staticflickr.com/3332/3451193407_b7f047f4b4_o.jpg";//change with your external photo url
 
 
-        if(window.FormData === undefined){
+        if(window.FormData === undefined || window.Blob === undefined  || typeof window.Blob === 'object'){
           view.advancedShare(); 
           window._gaq.push(['_trackEvent', 'CreateBand','PostBand','Total Band Members',totalBandMembers]);
           window._gaq.push(['_trackPageview','step_3-OfferPage']);
@@ -458,7 +458,7 @@ define([
             var contentType = parts[0].split(':')[1];
             var raw = parts[1];
 
-            return new Blob([raw], {type: contentType});
+            return new window.Blob([raw], {type: contentType});
           }
 
           var parts = dataURL.split(BASE64_MARKER);
@@ -472,7 +472,7 @@ define([
             uInt8Array[i] = raw.charCodeAt(i);
           }
 
-          return new Blob([uInt8Array], {type: contentType});
+          return new window.Blob([uInt8Array], {type: contentType});
         }
 
         formData.append("source",dataURItoBlob(view.stage.toDataURL()));
